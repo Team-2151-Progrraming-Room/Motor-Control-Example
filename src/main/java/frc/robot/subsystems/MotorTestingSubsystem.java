@@ -25,13 +25,7 @@ public class MotorTestingSubsystem extends SubsystemBase {
   private final CurrentLimitsConfigs CurrentLimit = new CurrentLimitsConfigs();
   /** Creates a new ExampleSubsystem. */
   public MotorTestingSubsystem() {
-    TestMotor.stopMotor();
     
-    CurrentLimit.withSupplyCurrentLimit(40);
-
-    TestMotorConfig.withCurrentLimits(CurrentLimit);
-
-    TestMotor.getConfigurator().apply(TestMotorConfig);
     
   }
 
@@ -45,14 +39,14 @@ public class MotorTestingSubsystem extends SubsystemBase {
     // Subsystem::RunOnce implicitly requires `this` subsystem.
     return runOnce(
         () -> {
-          TestMotor.set(0.5);
+          
         });
   }
 
   public Command stopMotor() {
     return runOnce(
         () -> {
-          TestMotor.stopMotor();
+          
         });
   }
 
