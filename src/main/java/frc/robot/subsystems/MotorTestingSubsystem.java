@@ -26,16 +26,10 @@ public class MotorTestingSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public MotorTestingSubsystem() {
     TestMotor.stopMotor();
-
+    
     CurrentLimit.withSupplyCurrentLimit(40);
 
     TestMotorConfig.withCurrentLimits(CurrentLimit);
-
-    TestMotorConfig.Slot0.kS = 0; // Add 0.1 V output to overcome static friction
-    TestMotorConfig.Slot0.kV = 0.13; // A velocity target of 1 rps results in 0.13 V output
-    TestMotorConfig.Slot0.kP = 0.13; // An error of 1 rps results in 0.13 V output
-    TestMotorConfig.Slot0.kI = 0; // no output for integrated error
-    TestMotorConfig.Slot0.kD = 0; // no output for error derivative
 
     TestMotor.getConfigurator().apply(TestMotorConfig);
     
@@ -51,8 +45,7 @@ public class MotorTestingSubsystem extends SubsystemBase {
     // Subsystem::RunOnce implicitly requires `this` subsystem.
     return runOnce(
         () -> {
-          final VelocityVoltage m_request = new VelocityVoltage(0).withSlot(0);
-          TestMotor.setControl(m_request.withVelocity(5).withFeedForward(0.2));
+          TestMotor.set(0.5);
         });
   }
 
@@ -60,12 +53,6 @@ public class MotorTestingSubsystem extends SubsystemBase {
     return runOnce(
         () -> {
           TestMotor.stopMotor();
-        });
-  }
-  public Command jackshit() {
-    return runOnce(
-        () -> {
-          System.out.println("jackshit");
         });
   }
 
